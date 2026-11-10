@@ -16,6 +16,13 @@ DirectoryIndex index.html
   # /index.html → /
   RewriteCond %{THE_REQUEST} \s/index\.html[\s?] [NC]
   RewriteRule ^index\.html$ / [L,R=301]
+  # Блог, чистые адреса: /blog/slug/index.html → /blog/slug/
+  RewriteCond %{THE_REQUEST} \s/(.+/)index\.html[\s?] [NC]
+  RewriteRule ^ https://%{HTTP_HOST}/%1 [L,R=301]
+  # /blog/slug (папка без слэша) → https://…/blog/slug/ — сразу на https, без промежуточного http-редиректа mod_dir
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.+)$ https://%{HTTP_HOST}/$1/ [L,R=301]
   # служебные файлы сборки не отдаём
   RewriteRule ^(placeholders|build-info)\.json$ - [F,L]
 </IfModule>
