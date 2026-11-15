@@ -15,7 +15,7 @@ DirectoryIndex index.html
   RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
   # /index.html → /
   RewriteCond %{THE_REQUEST} \s/index\.html[\s?] [NC]
-  RewriteRule ^index\.html$ / [L,R=301]
+  RewriteRule ^index\.html$ https://%{HTTP_HOST}/ [L,R=301]
   # Блог, чистые адреса: /blog/slug/index.html → /blog/slug/
   RewriteCond %{THE_REQUEST} \s/(.+/)index\.html[\s?] [NC]
   RewriteRule ^ https://%{HTTP_HOST}/%1 [L,R=301]
